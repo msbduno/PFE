@@ -1,5 +1,6 @@
 import 'package:eseosport_app/presentation/views/activity/record_page.dart';
 import 'package:eseosport_app/presentation/views/profile/profile_page.dart';
+import 'package:eseosport_app/presentation/views/profile/save_activity_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'presentation/viewmodels/live_data_viewmodel.dart';
@@ -24,27 +25,31 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/record': (context) => const RecordPage(),
         '/profile': (context) => ProfilePage(),
+        '/saveActivity': (context) => SaveActivityPage(),
       },
     );
   }
 }
 
 void main() {
-  // Assurez-vous que les liaisons Flutter sont initialisées
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Créer une instance du BluetoothRepository
   final bluetoothRepository = BluetoothRepository();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => LiveDataViewModel(bluetoothRepository),
+          create: (context) {
+            final viewModel = LiveDataViewModel(bluetoothRepository);
+            viewModel.initialize(); // Appel de l'initialisation ici
+            return viewModel;
+          },
         ),
-        // Vous pouvez ajouter d'autres providers ici si nécessaire
       ],
       child: const MyApp(),
     ),
   );
+
+  // Démarrer la recherche de périphériques Bluetooth
+  bluetoothRepository.startScanning();
 }

@@ -7,7 +7,6 @@ class BluetoothRepository {
   Stream<List<int>>? _dataStream;
 
   BluetoothRepository() {
-    // Initialiser le StreamController
     _dataStreamController = StreamController<List<int>>();
     _dataStream = _dataStreamController?.stream;
   }
@@ -23,8 +22,9 @@ class BluetoothRepository {
   Stream<List<int>>? getDataStream() {
     FlutterBluePlus.scanResults.listen((results) {
       for (ScanResult r in results) {
-        if (r.device.name == 'VotreAppareilBluetooth') {
+        if (r.device.name == 'MyDevice') {
           _connectToDevice(r.device);
+          break; // Éviter de se connecter à plusieurs fois au même appareil
         }
       }
     });
@@ -37,16 +37,20 @@ class BluetoothRepository {
     List<BluetoothService> services = await device.discoverServices();
 
     for (BluetoothService service in services) {
-      for (BluetoothCharacteristic characteristic in service.characteristics) {
-        characteristic.setNotifyValue(true);
-        characteristic.value.listen((value) {
-          // Utiliser sink.add pour ajouter des données au stream
-          _dataStreamController?.sink.add(value);
-        });
+      // Remplacez cet UUID avec celui de votre service attendu
+      if (service.uuid.toString() == 'Ox1111') {
+        for (BluetoothCharacteristic characteristic in service.characteristics) {
+          // Remplacez cet UUID avec celui de la caractéristique attendue
+          if (characteristic.uuid.toString() == '0x2222') {
+            characteristic.setNotifyValue(true);
+            characteristic.value.listen((value) {
+              _dataStreamController?.sink.add(value);
+            });
+          }
+        }
       }
     }
   }
-
   // Important : Fermer le StreamController
   void dispose() {
     _dataStreamController?.close();

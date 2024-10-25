@@ -45,8 +45,14 @@ class LiveDataViewModel extends ChangeNotifier {
       // Convertir les données brutes en String
       String jsonString = String.fromCharCodes(data);
 
+      // Ajoutez ce print pour vérifier le contenu du JSON reçu
+      print('Données reçues : $jsonString'); // <--- Ligne à ajouter ici
+
       // Parser le JSON
       Map<String, dynamic> jsonData = json.decode(jsonString);
+
+      // Si vous voulez aussi vérifier le JSON décodé
+      print('JSON décodé : $jsonData'); // <--- Ligne pour vérifier le JSON décodé
 
       // Mettre à jour le timestamp
       jsonData['timestamp'] = DateTime.now().toIso8601String();
@@ -60,4 +66,5 @@ class LiveDataViewModel extends ChangeNotifier {
       print('Erreur lors du parsing des données: $e');
     }
   }
+
 }
