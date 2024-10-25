@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/custom_bottom_nav_bar.dart';
+import '../../widgets/custom_bottom_nav_bar.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Activities'),
+        title: const Text('Activities'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
+            const Text(
               'You don\'t have any activities',
               style: TextStyle(fontSize: 18),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
-              child: Text('Record an activity'),
+              child: const Text('Record an activity'),
               onPressed: () {
                 // Navigate to login page
                 Navigator.pushReplacementNamed(context, '/login');
