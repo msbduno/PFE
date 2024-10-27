@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/activity_model.dart';
 
 class ActivityRepository {
-  final String apiUrl = 'http://your-spring-api-url/activities'; // Remplacer par l'URL de l'API
+  final String apiUrl = 'http://your-spring-api-url/activities'; // Replace with your API URL
 
   Future<void> saveActivity(Activity activity) async {
     final response = await http.post(
@@ -25,6 +25,14 @@ class ActivityRepository {
       return jsonData.map((json) => Activity.fromJson(json)).toList();
     } else {
       throw Exception('Failed to load activities');
+    }
+  }
+
+  Future<void> deleteActivity(int id) async {
+    final response = await http.delete(Uri.parse('$apiUrl/$id'));
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to delete activity');
     }
   }
 }

@@ -19,6 +19,7 @@ class NoActivityPage extends StatelessWidget {
           MaterialPageRoute(builder: (context) => const ActivitiesPage()),
         );
       });
+
     }
     return Scaffold(
       appBar: AppBar(

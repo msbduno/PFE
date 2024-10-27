@@ -39,7 +39,7 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
             backgroundColor: AppTheme.primaryColor,
           ),
         );
-        Navigator.pushReplacementNamed(context, '/profile');
+        Navigator.pushReplacementNamed(context, '/activities');
       });
     }
 

@@ -7,7 +7,7 @@ import 'package:eseosport_app/presentation/views/auth/signIn_page.dart';
 import 'package:eseosport_app/presentation/views/record/record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'data/repositories/ activity_repository.dart';
+import 'data/repositories/activity_repository.dart';
 import 'data/repositories/auth_repository.dart';
 import 'data/repositories/bluetooth_repository.dart';
 import 'presentation/viewmodels/live_data_viewmodel.dart';
@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ActivityViewModel(ActivityRepository()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => MockActivityViewModel(),
         ),
         ChangeNotifierProvider(
             create: (context) => AuthViewModel(AuthRepository())),
