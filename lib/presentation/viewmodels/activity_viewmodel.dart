@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import '../../data/models/activity_model.dart';
 import '../../data/repositories/ activity_repository.dart';
 
-
 class ActivityViewModel extends ChangeNotifier {
   final ActivityRepository _activityRepository;
   List<Activity> _activities = [];
   bool _isLoading = false;
   String? _errorMessage;
 
-  ActivityViewModel(this._activityRepository);
+  ActivityViewModel(this._activityRepository) {
+    fetchActivities(); // Fetch activities when the ViewModel is created
+  }
 
   List<Activity> get activities => _activities;
   bool get isLoading => _isLoading;

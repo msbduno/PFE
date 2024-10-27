@@ -9,6 +9,8 @@ class Activity {
   final double averageSpeed; // en km/h
   final int averageBPM; // battements par minute
   final int userId;
+  late final String? comment;
+
 
   Activity({
     required this.idActivity,
@@ -19,7 +21,13 @@ class Activity {
     required this.averageSpeed,
     required this.averageBPM,
     required this.userId,
+    this.comment,
   });
+
+  // Add a method to update the comment
+  void updateComment(String newComment) {
+    comment = newComment;
+  }
 
   // Méthode pour convertir l'objet Activity en JSON
   Map<String, dynamic> toJson() {
@@ -32,6 +40,7 @@ class Activity {
       'averageSpeed': averageSpeed,
       'averageBPM': averageBPM,
       'userId': userId,
+      'comment': comment,
     };
   }
 
@@ -46,6 +55,7 @@ class Activity {
       averageSpeed: json['averageSpeed'],
       averageBPM: json['averageBPM'],
       userId: json['userId'],
+      comment: json['comment'],
     );
   }
 }

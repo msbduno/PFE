@@ -1,13 +1,30 @@
+import 'package:eseosport_app/presentation/views/activity/activities_page.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../../core/theme/app_theme.dart';
+import '../../viewmodels/activity_viewmodel.dart';
 import '../../widgets/custom_bottom_nav_bar.dart';
 
-class ProfilePage extends StatelessWidget {
+
+class NoActivityPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final activityViewModel = Provider.of<ActivityViewModel>(context);
+
+    // Check if there are any activities
+    if (activityViewModel.activities.isNotEmpty) {
+      // Navigate to the HelloPage if there are activities
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const ActivitiesPage()),
+        );
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Activities',
           style: TextStyle(
@@ -25,8 +42,7 @@ class ProfilePage extends StatelessWidget {
             children: <Widget>[
               const Text(
                 'You don\'t have any activities ...',
-                style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),
-
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 400), // Space below the text
               ElevatedButton(
