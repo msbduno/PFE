@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/activity_model.dart';
-import '../../viewmodels/activity_viewmodel.dart';
 import '../../widgets/custom_bottom_nav_bar.dart';
 
 class SaveActivityPage extends StatefulWidget {
@@ -15,6 +12,8 @@ class SaveActivityPage extends StatefulWidget {
 
 class _SaveActivityPageState extends State<SaveActivityPage> {
   final TextEditingController _commentController = TextEditingController();
+  String _selectedActivity = 'Bike'; // Default selected activity
+  final List<String> _activities = ['Bike', 'Run', 'Walk', 'Swim'];
 
   @override
   void dispose() {
@@ -30,15 +29,18 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
       //final activityViewModel = Provider.of<ActivityViewModel>(context, listen: false);
       //activity.updateComment(_commentController.text); // Update the comment
       //await activityViewModel.saveActivity(activity);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: const Text(
-          'Activity saved successfully!',
-          style: TextStyle(color: Colors.white),
-        ),
-          backgroundColor: AppTheme.primaryColor,
-        ),
-      );
-      Navigator.pushReplacementNamed(context, '/profile');
+      if (!mounted) return; // Ensure the widget is still in the widget tree
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text(
+            'Activity saved successfully!',
+            style: TextStyle(color: AppTheme.backgroundColor),
+          ),
+            backgroundColor: AppTheme.primaryColor,
+          ),
+        );
+        Navigator.pushReplacementNamed(context, '/profile');
+      });
     }
 
     return Scaffold(
@@ -68,20 +70,24 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: ListTile(
-                title: const Text(
-                  'Bike',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                  ),
+                title: DropdownButton<String>(
+                  value: _selectedActivity,
+                  items: _activities.map((String activity) {
+                    return DropdownMenuItem<String>(
+                      value: activity,
+                      child: Text(activity),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedActivity = newValue!;
+                    });
+                  },
                 ),
                 trailing: const Icon(
                   Icons.keyboard_arrow_down,
                   color: Colors.grey,
                 ),
-                onTap: () {
-                  // Handle activity type selection
-                },
               ),
             ),
             const SizedBox(height: 10),
@@ -143,7 +149,7 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
+                  foregroundColor: AppTheme.backgroundColor,
                   backgroundColor: AppTheme.primaryColor,
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                   shape: RoundedRectangleBorder(

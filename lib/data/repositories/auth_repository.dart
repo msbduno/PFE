@@ -31,7 +31,7 @@ class AuthRepository {
       }),
     );
 
-    return response.statusCode == 201; // Inscription réussie
+    return response.statusCode == 201;
   }
 }
 

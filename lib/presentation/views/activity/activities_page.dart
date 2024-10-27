@@ -7,7 +7,7 @@ class ActivitiesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hello Page'),
+        title: const Text('Liste des activités'),
       ),
       body: const Center(
         child: Text('Hello', style: TextStyle(fontSize: 24)),

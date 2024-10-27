@@ -3,11 +3,11 @@
 class Activity {
   final int idActivity;
   final DateTime date;
-  final int duration; // en secondes
-  final double distance; // en kilomètres
-  final double elevation; // en mètres
-  final double averageSpeed; // en km/h
-  final int averageBPM; // battements par minute
+  final int duration;
+  final double distance;
+  final double elevation;
+  final double averageSpeed;
+  final int averageBPM;
   final int userId;
   late final String? comment;
 
@@ -24,7 +24,7 @@ class Activity {
     this.comment,
   });
 
-  // Add a method to update the comment
+
   void updateComment(String newComment) {
     comment = newComment;
   }

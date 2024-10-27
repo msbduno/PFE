@@ -117,7 +117,7 @@ class SignInPage extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: const Text(
                             'Failed to login. Please check your credentials.',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: AppTheme.backgroundColor),
                           ),
                             backgroundColor: AppTheme.primaryColor,
                           ),

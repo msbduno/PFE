@@ -86,7 +86,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 120),
+            const SizedBox(height: 130),
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

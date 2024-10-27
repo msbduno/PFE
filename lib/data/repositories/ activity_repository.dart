@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import '../models/activity_model.dart';
 
 class ActivityRepository {
-  final String apiUrl = 'http://your-spring-api-url/activities'; // Remplace par l'URL de ton API
+  final String apiUrl = 'http://your-spring-api-url/activities'; // Remplacer par l'URL de l'API
 
   Future<void> saveActivity(Activity activity) async {
     final response = await http.post(

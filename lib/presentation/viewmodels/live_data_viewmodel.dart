@@ -51,9 +51,6 @@ class LiveDataViewModel extends ChangeNotifier {
       // Parser le JSON
       Map<String, dynamic> jsonData = json.decode(jsonString);
 
-      // Si vous voulez aussi vérifier le JSON décodé
-      print('JSON décodé : $jsonData'); // <--- Ligne pour vérifier le JSON décodé
-
       // Mettre à jour le timestamp
       jsonData['timestamp'] = DateTime.now().toIso8601String();
 

@@ -32,14 +32,16 @@ class MyApp extends StatelessWidget {
             create: (context) => AuthViewModel(AuthRepository())),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
+
         title: 'ESEOSPORT',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
           useMaterial3: true,
         ),
-        home: SplashScreen(),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/splash',
         routes: {
+          '/splash': (context) => SplashScreen(),
           '/home': (context) => HomePage(),
           '/record': (context) => const RecordPage(),
           '/profile': (context) => NoActivityPage(),

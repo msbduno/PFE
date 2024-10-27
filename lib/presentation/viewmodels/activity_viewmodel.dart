@@ -32,6 +32,6 @@ class ActivityViewModel extends ChangeNotifier {
 
   Future<void> saveActivity(Activity activity) async {
     await _activityRepository.saveActivity(activity);
-    await fetchActivities(); // Met à jour la liste des activités
+    await fetchActivities(); // Mettre à jour la liste des activités
   }
 }

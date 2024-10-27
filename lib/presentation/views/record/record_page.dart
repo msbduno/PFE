@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../../../data/models/activity_model.dart';
-import '../../widgets/CircleButton.dart';
-import '../../widgets/DataColumn.dart';
+import '../../widgets/circle_button.dart';
+import '../../widgets/data_column.dart';
 import '../../widgets/custom_bottom_nav_bar.dart';
 import '../../viewmodels/live_data_viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -22,12 +22,16 @@ class _RecordPageState extends State<RecordPage> {
   String _elapsedTime = '00:00:00';
   Activity? _currentActivity;
   double _cumulativeDistance = 0.0;  // Pour suivre la distance totale
+  late LiveDataViewModel _liveDataVM;
 
   @override
   void initState() {
     super.initState();
     _stopwatch = Stopwatch();
-    Provider.of<LiveDataViewModel>(context, listen: false).initialize();
+    _liveDataVM = Provider.of<LiveDataViewModel>(context, listen: false);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _liveDataVM.initialize();
+    });
   }
 
   @override
@@ -36,7 +40,7 @@ class _RecordPageState extends State<RecordPage> {
       _timer.cancel();
       _stopwatch.stop();
     }
-    Provider.of<LiveDataViewModel>(context, listen: false).stopReceivingData();
+    _liveDataVM.stopReceivingData();
     super.dispose();
   }
 
@@ -69,10 +73,8 @@ class _RecordPageState extends State<RecordPage> {
 
     _stopwatch.start();
     _timer = Timer.periodic(const Duration(milliseconds: 100), (timer) {
-      final liveDataVM = Provider.of<LiveDataViewModel>(context, listen: false);
-
       // Calculer la distance parcourue en fonction de la vitesse
-      double distanceIncrement = (liveDataVM.currentSpeed / 3600) * 0.1; // vitesse en km/h * temps en heures
+      double distanceIncrement = (_liveDataVM.currentSpeed / 3600) * 0.1; // vitesse en km/h * temps en heures
       _cumulativeDistance += distanceIncrement;
 
       setState(() {
@@ -84,32 +86,29 @@ class _RecordPageState extends State<RecordPage> {
             date: _currentActivity!.date,
             duration: _stopwatch.elapsed.inSeconds,
             distance: _cumulativeDistance,
-            elevation: liveDataVM.currentAltitude ?? 0.0,
-            averageSpeed: liveDataVM.currentSpeed,
-            averageBPM: liveDataVM.currentBPM ?? 0,
+            elevation: _liveDataVM.currentAltitude ?? 0.0,
+            averageSpeed: _liveDataVM.currentSpeed,
+            averageBPM: _liveDataVM.currentBPM ?? 0,
             userId: _currentActivity!.userId,
           );
         }
       });
     });
-    Provider.of<LiveDataViewModel>(context, listen: false).startReceivingData();
+    _liveDataVM.startReceivingData();
   }
 
   void _saveAndStopRecording() async {
     if (_currentActivity != null) {
-      final liveDataVM = Provider.of<LiveDataViewModel>(context, listen: false);
-
       final finalActivity = Activity(
         idActivity: _currentActivity!.idActivity,
         date: _currentActivity!.date,
         duration: _stopwatch.elapsed.inSeconds,
         distance: _cumulativeDistance,
-        elevation: liveDataVM.currentAltitude ?? 0.0,
-        averageSpeed: liveDataVM.currentSpeed,
-        averageBPM: liveDataVM.currentBPM ?? 0,
+        elevation: _liveDataVM.currentAltitude ?? 0.0,
+        averageSpeed: _liveDataVM.currentSpeed,
+        averageBPM: _liveDataVM.currentBPM ?? 0,
         userId: _currentActivity!.userId,
       );
-
       // Sauvegarder l'activité
       // await ActivityRepository.saveActivity(finalActivity);
     }
@@ -120,7 +119,7 @@ class _RecordPageState extends State<RecordPage> {
 
     _stopwatch.stop();
     _timer.cancel();
-    Provider.of<LiveDataViewModel>(context, listen: false).stopReceivingData();
+    _liveDataVM.stopReceivingData();
   }
 
   void _cancelActivity() {
@@ -136,7 +135,7 @@ class _RecordPageState extends State<RecordPage> {
     if (_isRecording) {
       _timer.cancel();
     }
-    Provider.of<LiveDataViewModel>(context, listen: false).stopReceivingData();
+    _liveDataVM.stopReceivingData();
   }
 
   void _saveActivityDetails() {
@@ -177,50 +176,53 @@ class _RecordPageState extends State<RecordPage> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
-            // Adding padding around the SPEED and DISTANCE data
+
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(55.0), // Adjust the padding value as needed
+                  padding: const EdgeInsets.all(25.0),
                   child: buildDataColumn(
                     'SPEED',
                     '${liveDataVM.currentSpeed.toStringAsFixed(1)}',
-                    'km/h',
+                    'KM/H',
+                    fontSize: 24.0,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(55.0), // Adjust the padding value as needed
+                  padding: const EdgeInsets.all(10.0),
                   child: buildDataColumn(
                     'DISTANCE',
                     '${_cumulativeDistance.toStringAsFixed(1)}',
-                    'km',
+                    'KILOMETERS',
+                    fontSize: 24.0,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 10),
 
-            // Adding padding around the ELEVATION and BPM data
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(55.0), // Adjust the padding value as needed
+                  padding: const EdgeInsets.all(45.0),
                   child: buildDataColumn(
                     'ELEVATION',
                     '${liveDataVM.currentAltitude?.toStringAsFixed(0) ?? "0"}',
-                    'm',
+                    'METERS',
+                    fontSize: 24.0,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(55.0), // Adjust the padding value as needed
+                  padding: const EdgeInsets.all(40.0),
                   child: buildDataColumn(
                     'BPM',
-                    '${liveDataVM.currentBPM ?? "0"}',
+                    '${liveDataVM.currentBPM ?? "_ _"}',
                     '',
+                    fontSize: 24.0,
                   ),
                 ),
               ],
@@ -247,7 +249,7 @@ class _RecordPageState extends State<RecordPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 70),
           ],
         ),
       ),
@@ -263,5 +265,4 @@ class _RecordPageState extends State<RecordPage> {
       ),
     );
   }
-
 }

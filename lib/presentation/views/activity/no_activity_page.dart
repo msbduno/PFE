@@ -13,7 +13,6 @@ class NoActivityPage extends StatelessWidget {
 
     // Check if there are any activities
     if (activityViewModel.activities.isNotEmpty) {
-      // Navigate to the HelloPage if there are activities
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacement(
           context,
@@ -21,21 +20,20 @@ class NoActivityPage extends StatelessWidget {
         );
       });
     }
-
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text(
           'Activities',
           style: TextStyle(
-            color: Colors.black, // Change text color if needed
+            color: Colors.black,
             fontWeight: FontWeight.w500,
           ),
         ),
         centerTitle: true, // Center the title
       ),
       body: Container(
-        color: Colors.grey[300], // Set the background color here
+        color: Colors.grey[300],
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -44,7 +42,7 @@ class NoActivityPage extends StatelessWidget {
                 'You don\'t have any activities ...',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 400), // Space below the text
+              const SizedBox(height: 400),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
@@ -53,11 +51,10 @@ class NoActivityPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  minimumSize: const Size(350, 40), // Set the minimum size for the button
+                  minimumSize: const Size(350, 40),
                 ),
                 child: const Text('Record an activity'),
                 onPressed: () {
-                  // Navigate to record page
                   Navigator.pushReplacementNamed(context, '/record');
                 },
               )

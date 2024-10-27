@@ -1,6 +1,6 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-// Renommer la classe pour éviter la confusion avec BluetoothService de flutter_blue_plus
+
 class BluetoothServiceManager {
   BluetoothDevice? _connectedDevice;
 

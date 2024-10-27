@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/theme/app_theme.dart';
+
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onTap;
@@ -20,7 +22,7 @@ class CustomBottomNavBar extends StatelessWidget {
       ],
       currentIndex: currentIndex,
       onTap: onTap,
-      selectedItemColor: Colors.red,
+      selectedItemColor: AppTheme.primaryColor,
     );
   }
 }
