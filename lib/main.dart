@@ -4,6 +4,7 @@ import 'package:eseosport_app/presentation/views/activity/activities_page.dart';
 import 'package:eseosport_app/presentation/views/activity/no_activity_page.dart';
 import 'package:eseosport_app/presentation/views/auth/login_page.dart';
 import 'package:eseosport_app/presentation/views/auth/signIn_page.dart';
+import 'package:eseosport_app/presentation/views/profile/profile_page.dart';
 import 'package:eseosport_app/presentation/views/record/record_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -38,20 +39,21 @@ class MyApp extends StatelessWidget {
 
         title: 'ESEOSPORT',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
           useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/splash',
         routes: {
-          '/splash': (context) => SplashScreen(),
+          '/splash': (context) => const SplashScreen(),
           '/home': (context) => HomePage(),
           '/record': (context) => const RecordPage(),
-          '/profile': (context) => NoActivityPage(),
+          '/activity': (context) => NoActivityPage(),
           '/saveActivity': (context) => const SaveActivityPage(),
           '/activities': (context) => const ActivitiesPage(),
           '/login': (context) => LoginPage(),
           '/signin': (context) => SignInPage(),
+          '/profile': (context) => ProfilePage(),
         },
       ),
     );

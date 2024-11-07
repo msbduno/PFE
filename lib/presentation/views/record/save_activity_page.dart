@@ -13,7 +13,7 @@ class SaveActivityPage extends StatefulWidget {
 class _SaveActivityPageState extends State<SaveActivityPage> {
   final TextEditingController _commentController = TextEditingController();
   String _selectedActivity = 'Bike'; // Default selected activity
-  final List<String> _activities = ['Bike', 'Run', 'Walk', 'Swim'];
+  final List<String> _activities = ['Bike', 'Run', 'Walk'];
 
   @override
   void dispose() {
@@ -46,18 +46,18 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Activities',
+          'Your activity',
           style: TextStyle(
             color: Colors.black,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600, // Semi-bold
           ),
         ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: AppTheme.primaryColor, // Set the back button color here
-        ),
+        centerTitle: false, // Align to the left
+        automaticallyImplyLeading: false, // Remove the back arrow
+        backgroundColor: Colors.white, // Set AppBar background color to white
       ),
-      body: Padding(
+      backgroundColor: Colors.white, // Set background color to white
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0), // Add padding to the entire body
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,10 +84,6 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
                     });
                   },
                 ),
-                trailing: const Icon(
-                  Icons.keyboard_arrow_down,
-                  color: Colors.grey,
-                ),
               ),
             ),
             const SizedBox(height: 10),
@@ -99,8 +95,8 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
               child: ListTile(
                 title: Text(
                   'Duration: ${activity.duration} seconds\n'
-                  'Distance: ${activity.distance} km\n'
-                  'Elevation: ${activity.elevation} meters',
+                      'Distance: ${activity.distance} km\n'
+                      'Elevation: ${activity.elevation} meters',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -117,7 +113,7 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
               child: ListTile(
                 title: Text(
                   'Average Speed: ${activity.averageSpeed} km/h\n'
-                  'Average BPM: ${activity.averageBPM}',
+                      'Average BPM: ${activity.averageBPM}',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -153,7 +149,7 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
                   backgroundColor: AppTheme.primaryColor,
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                   minimumSize: const Size(350, 40),
                 ),
@@ -171,6 +167,8 @@ class _SaveActivityPageState extends State<SaveActivityPage> {
             Navigator.pushReplacementNamed(context, '/home');
           } else if (index == 1) {
             Navigator.pushReplacementNamed(context, '/record');
+          }else if (index == 3) {
+            Navigator.pushReplacementNamed(context, '/profile');
           }
         },
       ),

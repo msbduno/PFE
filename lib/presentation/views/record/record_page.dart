@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import '../../../data/models/activity_model.dart';
@@ -157,6 +158,7 @@ class _RecordPageState extends State<RecordPage> {
     final liveDataVM = Provider.of<LiveDataViewModel>(context);
 
     return Scaffold(
+      backgroundColor: Colors.white, // Set background color to white
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -259,6 +261,8 @@ class _RecordPageState extends State<RecordPage> {
           if (index == 0) {
             Navigator.pushReplacementNamed(context, '/home');
           } else if (index == 2) {
+            Navigator.pushReplacementNamed(context, '/activity');
+          }else if (index == 3) {
             Navigator.pushReplacementNamed(context, '/profile');
           }
         },
